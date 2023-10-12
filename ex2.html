@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MREC Maps - Keywords</title>
+    <style>
+        /* Header styles */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .college-logo img {
+            width: 85px;
+            height: 85px;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .mrec-maps-logo img {
+            width: 90px;
+            height: 90px;
+            float: right;
+            margin-left: 10px;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        /* Button animation */
+        .new-buttons {
+            display: none;
+        }
+
+        .keyword-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 25px;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .keyword-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Image gallery */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            display: block;
+            margin: 0 auto;
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+        }
+
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="college-logo">
+        <img src="MREC_LOGO.jpeg" alt="College Logo">
+    </div>
+
+    <h1>Select Your Destination</h1>
+
+    <div class="mrec-maps-logo">
+        <img src="1.png" alt="MREC Maps Logo">
+    </div>
+</header>
+
+<main>
+    <!-- The modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="Image">
+        <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="next" onclick="changeImage(1)">&#10095;</button>
+    </div>
+
+    <!-- Create location buttons -->
+    <button class="keyword-button" onclick="showInfo('Main_gate', 0)">Main Gate</button>
+    <button class="keyword-button" onclick="showInfo('Major_Auditorium', 1)">Major Auditorium</button>
+    <button class="keyword-button" onclick="showInfo('BEE', 2)">BEE</button>
+    <button class="keyword-button" onclick="showInfo('Civil_block', 3)">Civil Block</button>
+    <button class="keyword-button" onclick="showInfo('BB_court', 4)">BB Court</button>
+    <button class="keyword-button" onclick="showInfo('MBA', 5)">MBA</button>
+    <button class="keyword-button" onclick="showInfo('Stationary', 6)">Stationary</button>
+    <button class="keyword-button" onclick="showInfo('Workshop_Mech', 7)">Workshop (Mech)</button>
+    <button class="keyword-button" onclick="showInfo('BIC', 8)">BIC</button>
+    <button class="keyword-button" onclick="showInfo('ATMs', 9)">ATMs</button>
+    <button class="keyword-button" onclick="showInfo('Canteen', 10)">Canteen</button>
+    <button class="keyword-button" onclick="showInfo('Library', 11)">Library</button>
+    <button class="keyword-button" onclick="showInfo('Bus_parking', 12)">Bus Parking</button>
+    <button class="keyword-button" onclick="showInfo('First_year_block', 13)">First Year Block</button>
+    <button class="keyword-button" onclick="showInfo('Food_ball_court', 14)">Food Ball Court</button>
+    <button class="keyword-button" onclick="showInfo('Student_parking', 15)">Student Parking</button>
+    <button class="keyword-button" onclick="showInfo('Staff_parking', 16)">Staff Parking</button>
+    <button class="keyword-button" onclick="showInfo('Volleyball_court', 17)">Volleyball Court</button>
+    <button class="keyword-button" onclick="showInfo('Badminton_court', 18)">Badminton Court</button>
+    <button class="keyword-button" onclick="showInfo('Pharmacy', 19)">Pharmacy</button>
+    <button class="keyword-button" onclick="showInfo('COE', 20)">COE</button>
+    <button class="keyword-button" onclick="showInfo('Cricket_ground', 21)">Cricket Ground</button>
+    <button class="keyword-button" onclick="showInfo('Girls_hostel', 22)">Girls Hostel</button>
+    <button class="keyword-button" onclick="showInfo('R_and_D', 23)">R&D</button>
+    <button class="keyword-button" onclick="showInfo('Sports/Gym', 24)">Sports/Gym</button>
+    <button class="keyword-button" onclick="showInfo('CSE_block', 25)">CSE Block</button>
+    <button class="keyword-button" onclick="showInfo('Principal_Office', 26)">Principal Office</button>
+    <button class="keyword-button" onclick="showInfo('Kabaddi_court', 27)">Kabaddi Court</button>
+    <button class="keyword-button" onclick="showInfo('Mech_block', 28)">Mech Block</button>
+    <button class="keyword-button" onclick="showInfo('Admin_block', 29)">Admin Block</button>
+    <!-- Add more buttons as needed -->
+</main>
+
+<footer>
+    <!-- Add any footer content you want -->
+</footer>
+
+<script>
+    // Image gallery functionality
+    const imageUrls = [
+        'first.png',
+        'second.png',
+        'bee.png',
+        'civil.png',
+        'bb_court.png',
+        'mba.png',
+        'stationary.png',
+        'workshop_mech.png',
+        'bic.png',
+        'atms.png',
+        'canteen.png',
+        'library.png',
+        'bus_parking.png',
+        'first_year_block.png',
+        'food_ball_court.png',
+        'student_parking.png',
+        'staff_parking.png',
+        'volleyball_court.png',
+        'badminton_court.png',
+        'pharmacy.png',
+        'coe.png',
+        'cricket_ground.png',
+        'girls_hostel.png',
+        'r_and_d.png',
+        'sports_gym.png',
+        'cse_block.png',
+        'principal_office.png',
+        'kabaddi_court.png',
+        'mech_block.png',
+        'admin_block.png'
+        // Add more image URLs as needed
+    ];
+    let currentImageIndex = 0;
+
+    function showInfo(keyword, imageIndex) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        modal.style.display = 'block';
+        modalImg.src = imageUrls[imageIndex];
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.style.display = 'none';
+    }
+
+    function changeImage(step) {
+        currentImageIndex += step;
+
+        if (currentImageIndex >= imageUrls.length) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex < 0) {
+            currentImageIndex = imageUrls.length - 1;
+        }
+
+        const modalImg = document.getElementById('modalImage');
+        modalImg.src = imageUrls[currentImageIndex];
+    }
+
+    // Keyframes animation
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</script>
+
+</body>
+</html>

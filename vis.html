@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MREC Maps - Keywords</title>
+    <link rel="stylesheet" href="Secosnd.css">
+    <style>
+        /* Overall page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    background-color: #3498db;
+    color: #fff;
+    padding: 20px 0;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Style for keyword buttons */
+.keyword-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px; /* Adjust the margin to your preferred gap size */
+}
+
+.keyword-button:hover {
+    background-color: #0056b3;
+}
+
+/* Styles for new buttons */
+.new-buttons {
+    display: none;
+}
+
+.green-button {
+    background-color: blueviolet !important;
+    color: white !important;
+}
+
+/* Image gallery styles */
+.image-gallery {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.prev {
+    left: 0;
+}
+
+.next {
+    right: 0;
+}
+
+/* Modal styles */
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Arrange keywords into columns */
+.keyword-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.keyword-column {
+    flex: 0 0 calc(20% - 20px); /* 20% width with a 20px gap between columns */
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Change the color of specific keyword buttons by targeting their IDs */
+#Main_gate {
+    background-color: green !important;
+    color: white !important;
+}
+
+#major_Auditorium {
+    background-color: blueviolet !important;
+    color: rgb(188, 74, 74) !important;
+}
+
+/* Add more styles for other keyword buttons by targeting their IDs */
+
+/* Different background colors for each keyword */
+.keyword-button:nth-child(odd) {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.keyword-button:nth-child(even) {
+    background-color: #e91e63;
+    color: #fff;
+}
+
+/* Move the first row to the second row */
+.keyword-button:nth-child(5n + 1) {
+    grid-row: 2;
+}
+
+        
+    </style>
+    
+</head>
+<body>
+    <header>
+        <h1>Keywords</h1>
+    </header>
+    <main>
+        <!-- The modal -->
+        <div id="imageModal" class="modal">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="image-gallery">
+                <img id="modalImage" class="modal-content" src="" alt="Image">
+                <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+                <button class="next" onclick="changeImage(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- Create 5 columns with 6 keywords each -->
+        <div class="keyword-columns">
+            <!-- Column 1 -->
+            <div class="keyword-column">
+                <button class="keyword-button" onclick="toggleButtons('Main_gate')" style="background-color: orange;">Main_gate</button>
+                <div class="new-buttons" id="Main_gate-buttons">
+                    <button class="green-button" onclick="openMap(17.558528,78.451246)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Main_gate')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('major_Auditorium')" style="background-color:rgb(190, 244, 183);">major_Auditorium</button>
+                <div class="new-buttons" id="major_Auditorium-buttons">
+                    <button class="green-button" onclick="openMap(17.558994,78.452171)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('major_Auditorium')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('BEE')">BEE</button>
+                <div class="new-buttons" id="BEE-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('BEE')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Civil_block')">Civil_block</button>
+                <div class="new-buttons" id="Civil_block-buttons">
+                    <button class="green-button" onclick="openMap(17.558078,78.453623)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Civil_block')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('BB_court')">BB_court</button>
+                <div class="new-buttons" id="BB_court-buttons">
+                    <button class="green-button" onclick="openMap(17.558756,78.452934)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('BB_court')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('MBA')">MBA</button>
+                <div class="new-buttons" id="MBA-buttons">
+                    <button class="green-button" onclick="openMap(17.557997,78.454364)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('MBA')">Get Info</button>
+                </div>
+            </div>
+
+            <!-- Column 2 -->
+            <div class="keyword-column">
+                <button class="keyword-button" onclick="toggleButtons('Stationary')">Stationary</button>
+                <div class="new-buttons" id="Stationary-buttons">
+                    <button class="green-button" onclick="openMap(17.559005,78.45082)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Stationary')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('work_Shop_Mech')">work_Shop(Mech)</button>
+                <div class="new-buttons" id="work_Shop_Mech-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('work_Shop_Mech')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('BIC')">BIC</button>
+                <div class="new-buttons" id="BIC-buttons">
+                    <button class="green-button" onclick="openMap(17.559226,78.453399)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('BIC')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Atms')">Atms</button>
+                <div class="new-buttons" id="Atms-buttons">
+                    <button class="green-button" onclick="openMap(17.559011,78.450837)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Atms')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('canteen')">canteen</button>
+                <div class="new-buttons" id="canteen-buttons">
+                    <button class="green-button" onclick="openMap(17.559270,78.452415)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('canteen')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Library')">Library</button>
+                <div class="new-buttons" id="Library-buttons">
+                    <button class="green-button" onclick="openMap(17.559011,78.450837)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Library')">Get Info</button>
+                </div>
+            </div>
+            <!-- Column 3 -->
+            <div class="keyword-column">
+                <button class="keyword-button" onclick="toggleButtons('Bus_parking')">Bus_parking</button>
+                <div class="new-buttons" id="Bus_parking-buttons">
+                    <button class="green-button" onclick="openMap(17.559449,78.453727)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Bus_parking')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('First_year_block')">First_year_block</button>
+                <div class="new-buttons" id="First_year_block-buttons">
+                    <button class="green-button" onclick="openMap(17.558681,78.451107)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('First_year_block')">Get Info</button>
+                    <button class="prev" onclick="changeImage('First_year_block', -1)">&#10094;</button>
+                    <button class="next" onclick="changeImage('First_year_block', 1)">&#10095;</button>
+
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Food_ball_court')">Food_ball_court</button>
+                <div class="new-buttons" id="Food_ball_court-buttons">
+                    <button class="green-button" onclick="openMap(17.559016,78.452821)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Food_ball_court')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Student_parking')">Student_parking</button>
+                <div class="new-buttons" id="Student_parking-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Student_parking')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Staff_parking')">Staff_parking</button>
+                <div class="new-buttons" id="Staff_parking-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Staff_parking')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('volley_ball_court')">volley_ball_court</button>
+                <div class="new-buttons" id="volley_ball_court-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('volley_ball_court')">Get Info</button>
+                </div>
+            </div>
+            <!-- Column 4 -->
+            <div class="keyword-column">
+                <button class="keyword-button" onclick="toggleButtons('Badminton_court')">Badminton_court</button>
+                <div class="new-buttons" id="Badminton_court-buttons">
+                    <button class="green-button" onclick="openMap(17.558314,78.453391)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Badminton_court')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Pharmacy')">Pharmacy</button>
+                <div class="new-buttons" id="Pharmacy-buttons">
+                    <button class="green-button" onclick="openMap(17.557588,78.453993)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Pharmacy')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('COE')">COE</button>
+                <div class="new-buttons" id="COE-buttons">
+                    <button class="green-button" onclick="openMap(17.557941,78.452957)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('COE')">Get Info</button>
+                </div>
+                <br>
+                <button class="keyword-button" onclick="toggleButtons('Cricket_ground')">Cricket_ground</button>
+                <br>
+                <div class="new-buttons" id="Cricket_ground-buttons">
+                    <button class="green-button" onclick="openMap(17.558861,78.454169)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Cricket_ground')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('girls_hostel')">girls_hostel</button>
+                <div class="new-buttons" id="girls_hostel-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('girls_hostel')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('R_and_D')">R_and_D</button>
+                <div class="new-buttons" id="R_and_D-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('R_and_D')">Get Info</button>
+                </div>
+            </div>
+            <!-- Column 5 -->
+            <div class="keyword-column">
+                <button class="keyword-button" onclick="toggleButtons('Sports/Gym')">Sports/Gym</button>
+                <div class="new-buttons" id="Sports/Gym-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Sports/Gym')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('CSE_block')">CSE_block</button>
+                <div class="new-buttons" id="CSE_block-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('CSE_block')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Principal_Office')">Principal_Office</button>
+                <div class="new-buttons" id="Principal_Office-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Principal_Office')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Kabaddi_court')">Kabaddi_court</button>
+                <div class="new-buttons" id="Kabaddi_court-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Kabaddi_court')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Mech_block')">Mech_block</button>
+                <div class="new-buttons" id="Mech_block-buttons">
+                    <button class="green-button" onclick="openMap(17.557805,78.453162)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Mech_block')">Get Info</button>
+                </div>
+
+                <button class="keyword-button" onclick="toggleButtons('Admin_block')">Admin_block</button>
+                <div class="new-buttons" id="Admin_block-buttons">
+                    <button class="green-button" onclick="openMap(38.0, -123.0)">Open Maps</button>
+                    <button class="green-button" onclick="getInfo('Admin_block')">Get Info</button>
+                </div>
+            </div>
+            <!-- Add more columns and buttons as needed -->
+        </div>
+    </main>
+    <footer>
+        <!-- Add any footer content you want -->
+    </footer>
+    <script>
+        function openMap(latitude, longitude) {
+            const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+            window.open(url);
+        }
+    
+        // Create an object that maps each keyword to an array of image URLs
+        const imageUrls = {
+            Main_gate: ['main gate.jpeg', 'image2.jpg', 'image3.jpg'],
+            major_Auditorium: ['image4.jpg', 'image5.jpg', 'image6.jpg'],
+            BEE: ['image7.jpg', 'image8.jpg', 'image9.jpg'],
+            Civil_block: ['image10.jpg', 'image11.jpg', 'image12.jpg'],
+            BB_court: ['image13.jpg', 'image14.jpg', 'image15.jpg'],
+            MBA: ['image16.jpg', 'image17.jpg', 'image18.jpg'],
+            Stationary: ['image19.jpg', 'image20.jpg', 'image21.jpg'],
+            work_Shop_Mech: ['image22.jpg', 'image23.jpg', 'image24.jpg'],
+            BIC: ['image25.jpg', 'image26.jpg', 'image27.jpg'],
+            Atms: ['image28.jpg', 'image29.jpg', 'image30.jpg'],
+            canteen: ['image31.jpg', 'image32.jpg', 'image33.jpg'],
+            Library: ['image34.jpg', 'image35.jpg', 'image36.jpg'],
+            Bus_parking: ['image37.jpg', 'image38.jpg', 'image39.jpg'],
+            First_year_block: ['firstyear.jpeg', 'first.png', 'first1.png'],
+            Food_ball_court: ['image43.jpg', 'image44.jpg', 'image45.jpg'],
+            Student_parking: ['image46.jpg', 'image47.jpg', 'image48.jpg'],
+            Staff_parking: ['image49.jpg', 'image50.jpg', 'image51.jpg'],
+            volley_ball_court: ['image52.jpg', 'image53.jpg', 'image54.jpg'],
+            Badminton_court: ['image55.jpg', 'image56.jpg', 'image57.jpg'],
+            Pharmacy: ['image58.jpg', 'image59.jpg', 'image60.jpg'],
+            COE: ['image61.jpg', 'image62.jpg', 'image63.jpg'],
+            Cricket_ground: ['image64.jpg', 'image65.jpg', 'image66.jpg'],
+            girls_hostel: ['image67.jpg', 'image68.jpg', 'image69.jpg'],
+            R_and_D: ['image70.jpg', 'image71.jpg', 'image72.jpg'],
+            'Sports/Gym': ['image73.jpg', 'image74.jpg', 'image75.jpg'],
+            CSE_block: ['image76.jpg', 'image77.jpg', 'image78.jpg'],
+            Principal_Office: ['image79.jpg', 'image80.jpg', 'image81.jpg'],
+            Kabaddi_court: ['image82.jpg', 'image83.jpg', 'image84.jpg'],
+            Mech_block: ['image85.jpg', 'image86.jpg', 'image87.jpg'],
+            Admin_block: ['image88.jpg', 'image89.jpg', 'image90.jpg'],
+        };
+        
+    
+        let currentImageIndex = 0;
+    
+        function getInfo(keyword) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            if (imageUrls.hasOwnProperty(keyword)) {
+                const images = imageUrls[keyword];
+                currentImageIndex = 0;
+                modal.style.display = 'block';
+                modalImg.src = images[currentImageIndex];
+            } else {
+                // For other keywords, you can implement different actions here
+                // In this case, do nothing to prevent direct image opening
+            }
+        }
+    
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    
+        function changeImage(keyword, step) {
+            if (imageUrls.hasOwnProperty(keyword)) {
+                const images = imageUrls[keyword];
+                currentImageIndex += step;
+        
+                if (currentImageIndex >= images.length) {
+                    currentImageIndex = 0;
+                } else if (currentImageIndex < 0) {
+                    currentImageIndex = images.length - 1;
+                }
+        
+                const modalImg = document.getElementById('modalImage');
+                modalImg.src = images[currentImageIndex];
+            }
+        }
+        
+    
+        function toggleButtons(keyword) {
+            const buttonsDiv = document.getElementById(`${keyword}-buttons`);
+            buttonsDiv.style.display = buttonsDiv.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+    
+</body>
+</html>
